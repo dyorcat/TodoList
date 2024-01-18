@@ -1,7 +1,7 @@
 package com.teamsparta.todolist.domain.todo.model
 
+import com.teamsparta.todolist.domain.comment.model.Comment
 import jakarta.persistence.*
-import org.h2.engine.User
 import org.hibernate.annotations.CreationTimestamp
 import java.time.ZonedDateTime
 
@@ -17,7 +17,10 @@ class Todo(
     @Column
     val nickname: String,
 
-) {
+    @OneToMany(mappedBy = "todo")
+    val comments: List<Comment> = emptyList(),
+
+    ) {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

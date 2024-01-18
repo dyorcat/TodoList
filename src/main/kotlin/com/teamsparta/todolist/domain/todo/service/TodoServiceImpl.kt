@@ -2,6 +2,7 @@ package com.teamsparta.todolist.domain.todo.service
 
 import com.teamsparta.todolist.domain.exception.ModelNotFoundException
 import com.teamsparta.todolist.domain.todo.dto.CreateTodoRequest
+import com.teamsparta.todolist.domain.todo.dto.RetrieveTodoResponse
 import com.teamsparta.todolist.domain.todo.dto.TodoResponse
 import com.teamsparta.todolist.domain.todo.dto.UpdateTodoRequest
 import com.teamsparta.todolist.domain.todo.model.Todo
@@ -21,9 +22,9 @@ class TodoServiceImpl(
         return foundTodos.map { TodoResponse.from(it) }
     }
 
-    override fun findById(todoId: Long): TodoResponse {
+    override fun findById(todoId: Long): RetrieveTodoResponse? {
         val foundTodo: Todo = todoRepository.findByIdOrNull(todoId) ?: throw ModelNotFoundException("Todo", todoId)
-        return foundTodo.let{ TodoResponse.from(it)}
+        return foundTodo.let{ RetrieveTodoResponse.from(it)}
     }
 
     @Transactional
@@ -51,5 +52,13 @@ class TodoServiceImpl(
     override fun deleteTodo(todoId: Long) {
         val todo = todoRepository.findByIdOrNull(todoId) ?: throw ModelNotFoundException("Todo", todoId)
         todoRepository.deleteById(todoId)
+    }
+
+    override fun completeTodo(todoId: Long) {
+        val targetTodo = todoRepository.findByIdOrNull(todoId)
+
+        targetTodo?.let{ it.complete()
+            todoRepository.save(it)
+        }
     }
 }

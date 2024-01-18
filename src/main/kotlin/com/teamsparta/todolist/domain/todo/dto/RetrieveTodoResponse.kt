@@ -1,24 +1,28 @@
 package com.teamsparta.todolist.domain.todo.dto
 
+import com.teamsparta.todolist.domain.comment.dto.CommentResponse
 import com.teamsparta.todolist.domain.todo.model.Todo
 import java.time.ZonedDateTime
 
-data class TodoResponse(
+class RetrieveTodoResponse (
+    val id: Long?,
     val title: String,
     val content: String?,
     val nickname: String,
+    val isCompleted: Boolean,
     val createdAt: ZonedDateTime,
-    val isCompleted: Boolean
-) {
-
+    val comments: List<CommentResponse>
+){
     companion object {
-        fun from(todo: Todo): TodoResponse {
-            return TodoResponse(
+        fun from(todo: Todo): RetrieveTodoResponse {
+            return RetrieveTodoResponse(
+                id = todo.id,
                 title = todo.title,
                 content = todo.content,
                 nickname = todo.nickname,
+                isCompleted = todo.isCompleted,
                 createdAt = todo.createdAt,
-                isCompleted = todo.isCompleted
+                comments = todo.comments.map {CommentResponse.from(it) }
             )
         }
     }
