@@ -9,7 +9,7 @@ import com.teamsparta.todolist.domain.todo.model.Todo
 interface TodoService {
     fun findAll(): List<TodoResponse>
 
-    fun findAll(sort: String?): List<TodoResponse>
+    fun findAll(nickname: String?, sort: String?): List<TodoResponse>
 
     fun findById(todoId: Long): RetrieveTodoResponse?
 

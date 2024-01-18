@@ -7,7 +7,6 @@ import com.teamsparta.todolist.domain.todo.dto.UpdateTodoRequest
 import com.teamsparta.todolist.domain.todo.service.TodoService
 import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
-import org.springframework.web.ErrorResponse
 import org.springframework.web.bind.annotation.*
 
 @RequestMapping("/todos")
@@ -17,10 +16,10 @@ class TodoController(
 ) {
 
     @GetMapping()
-    fun findAllTodo(
+    fun findAllTodo(@RequestParam nickname: String?,
         @RequestParam sort: String?,
     ): ResponseEntity<List<TodoResponse>> {
-        val todos = todoService.findAll(sort)
+        val todos = todoService.findAll(nickname, sort)
         return ResponseEntity
             .status(HttpStatus.OK)
             .body(todoService.findAll())

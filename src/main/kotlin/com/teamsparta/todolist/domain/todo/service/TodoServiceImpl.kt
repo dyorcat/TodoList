@@ -22,13 +22,19 @@ class TodoServiceImpl(
         return foundTodos.map { TodoResponse.from(it) }
     }
 
-    override fun findAll(sort: String?): List<TodoResponse> {
+    override fun findAll(nickname: String?, sort: String?): List<TodoResponse> {
+        nickname?.let {
+            return todoRepository.findAllByNickname(nickname)
+                .map { TodoResponse.from(it) }
+        }
         return if (sort == "createdAt") {
-            todoRepository.findAllByOrderBycreatedAtAsc()
+            todoRepository.findAllByOrderByCreatedAtAsc()
         } else {
             todoRepository.findAllByOrderByCreatedAtDesc()
         }.map { TodoResponse.from(it) }
     }
+
+
 
     override fun findById(todoId: Long): RetrieveTodoResponse? {
         val foundTodo: Todo = todoRepository.findByIdOrNull(todoId) ?: throw ModelNotFoundException("Todo", todoId)
