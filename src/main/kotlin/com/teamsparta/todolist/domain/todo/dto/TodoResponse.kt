@@ -1,12 +1,25 @@
 package com.teamsparta.todolist.domain.todo.dto
 
-import java.util.Date
+import com.teamsparta.todolist.domain.todo.model.Todo
+import java.time.ZonedDateTime
 
 data class TodoResponse(
-    val id: Long,
+    val id: Long?,
     val title: String,
     val content: String?,
     val nickname: String,
-    val status: String,
-    val createdAt: Date,
-)
+    val createdAt: ZonedDateTime,
+) {
+
+    companion object {
+        fun from(todo: Todo): TodoResponse {
+            return TodoResponse(
+                id = todo.id,
+                title = todo.title,
+                content = todo.content,
+                nickname = todo.nickname,
+                createdAt = todo.createdAt,
+            )
+        }
+    }
+}

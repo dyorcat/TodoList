@@ -1,9 +1,13 @@
 package com.teamsparta.todolist.domain.todo.controller
 
+import com.teamsparta.todolist.domain.exception.ModelNotFoundException
 import com.teamsparta.todolist.domain.todo.dto.CreateTodoRequest
 import com.teamsparta.todolist.domain.todo.dto.TodoResponse
 import com.teamsparta.todolist.domain.todo.dto.UpdateTodoRequest
+import com.teamsparta.todolist.domain.todo.service.TodoService
+import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
+import org.springframework.web.ErrorResponse
 import org.springframework.web.bind.annotation.DeleteMapping
 import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.PathVariable
@@ -15,31 +19,48 @@ import org.springframework.web.bind.annotation.RestController
 
 @RequestMapping("/todos")
 @RestController
-class TodoController {
+class TodoController(
+    private val todoService: TodoService
+) {
 
     @GetMapping()
     fun getTodoList(): ResponseEntity<List<TodoResponse>> {
-        TODO("not implemented")
+        return ResponseEntity
+            .status(HttpStatus.OK)
+            .body(todoService.findAll())
     }
 
     @GetMapping("/{todoId}")
     fun getTodoById(@PathVariable todoId: Long): ResponseEntity<TodoResponse>{
-        TODO("not implemented")
+        return ResponseEntity
+            .status(HttpStatus.OK)
+            .body(todoService.findById(todoId))
     }
 
     @PostMapping
     fun createTodo(@RequestBody createTodoRequest: CreateTodoRequest): ResponseEntity<TodoResponse> {
-        TODO("not implemented")
+        return ResponseEntity
+            .status(HttpStatus.CREATED)
+            .body(todoService.createTodo(createTodoRequest))
     }
 
     @PutMapping("/{todoId}")
-    fun updateTodo(@PathVariable todoId: Long, @RequestBody updateTodoRequest: UpdateTodoRequest): ResponseEntity<TodoResponse>{
-        TODO("not implemented")
+    fun updateTodo(@PathVariable todoId: Long,
+                   @RequestBody updateTodoRequest: UpdateTodoRequest
+    ): ResponseEntity<TodoResponse>{
+        return ResponseEntity
+            .status(HttpStatus.OK)
+            .body(todoService.updateTodo(todoId, updateTodoRequest))
     }
 
     @DeleteMapping("/{todoId}")
     fun deleteTodo(@PathVariable todoId: Long): ResponseEntity<Unit> {
-        TODO("not implemented")
+        todoService.deleteTodo(todoId)
+        return ResponseEntity
+            .status(HttpStatus.NO_CONTENT)
+            .build()
     }
+
+
 
 }
