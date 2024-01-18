@@ -1,6 +1,7 @@
 package com.teamsparta.todolist.domain.user.model
 
 import jakarta.persistence.*
+import org.yaml.snakeyaml.tokens.AliasToken
 
 @Entity(name = "todo_user")
 class User(
