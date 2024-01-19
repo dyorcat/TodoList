@@ -11,3 +11,10 @@
 | **댓글 생성** | POST | `/todos/{id}/comments` |
 | **댓글 수정** | PUT | `/comments/{commentId}` |
 | **댓글 삭제** | DELETE | `/comments/{commentId}` |
+| **댓글 삭제** | DELETE | `/comments/{commentId}` |
+| **댓글 삭제** | DELETE | `/comments/{commentId}` |
+| **댓글 삭제** | DELETE | `/comments/{commentId}` |
+|회원가입(구현 덜 됨..)|	POST	|/signup|
+|로그인(구현 덜 됨..)|	POST	|/login|
+|프로필 수정(구현 덜 됨..)|PUT	|/user/{userId}/profile|
+|로그아웃(구현 덜 됨..)	|POST	/logout|
